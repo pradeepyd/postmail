@@ -16,8 +16,8 @@ const FAQSection = () => {
       answer: "Absolutely! You can edit any generated email before sending. The AI provides a great starting point, but you have full control to modify the content, tone, and formatting to match your needs."
     },
     {
-      question: "Is my data secure and private?",
-      answer: "Yes, we take privacy seriously. Your email content and personal information are encrypted and never stored permanently. We follow industry-standard security practices to protect your data."
+      question: "Are you storing any data?",
+      answer: "No, we aren't storing any data. You don't need to signin to use it."
     },
     {
       question: "What types of emails can I generate?",
@@ -34,7 +34,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <div className="py-20 px-4">
+    <div className="py-20 px-4 ">
       <div className="container mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
