@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+
 import { Github, Twitter, Linkedin, Instagram, Heart } from "lucide-react";
+import {MotionDiv} from "./motionDiv";
 
 const Footer = () => {
   const socialLinks = [
@@ -10,26 +11,26 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="py-12 px-4 border-t border-white/10">
+    <footer className="py-10 px-4 border-t border-white/10">
       <div className="container mx-auto text-center">
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="mb-6"
+          className="mb-4"
         >
-          <p className="text-white text-lg font-medium flex items-center justify-center gap-2">
+          <p className="text-white text-md font-medium flex items-center justify-center gap-1">
             Made with <Heart className="h-5 w-5 text-red-500 fill-current" /> by Pradeep
           </p>
-        </motion.div>
+        </MotionDiv>
         
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           viewport={{ once: true }}
-          className="flex items-center justify-center space-x-6"
+          className="flex items-center justify-center space-x-5"
         >
           {socialLinks.map((link, index) => (
             <a
@@ -41,7 +42,7 @@ const Footer = () => {
               {link.icon}
             </a>
           ))}
-        </motion.div>
+        </MotionDiv>
       </div>
     </footer>
   );

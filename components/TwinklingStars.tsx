@@ -1,10 +1,11 @@
-import { motion } from "framer-motion";
+
+import { MotionDiv } from "./motionDiv";
 
 const TwinklingStars = () => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {[...Array(50)].map((_, i) => (
-        <motion.div
+        <MotionDiv
           key={i}
           className="absolute w-1 h-1 bg-white rounded-full"
           style={{
