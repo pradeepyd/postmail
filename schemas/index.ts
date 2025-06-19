@@ -10,4 +10,5 @@ export const formSchema = z.object({
   recipientEmail: z.string().email("Valid recipient email is required"),
   aboutRecipient: z.string().optional(),
   additionalLinks: z.string().optional(),
+  calcom:z.string().optional()
 });
