@@ -1,7 +1,6 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Control, FieldPath, useForm } from "react-hook-form"
+import { Control, FieldPath } from "react-hook-form"
 import { z } from "zod"
 import {
   Form,
@@ -18,20 +17,6 @@ import { Textarea } from "./ui/textarea"
 
 type FormValues = z.infer<typeof formSchema>;
 
-export const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: "",
-      email:"",
-      position:"",
-      aboutYourself:"",
-      emailReason:"",
-      recipient:"",
-      recipientEmail:"",
-      aboutRecipient:"",
-      additionalLinks:"",
-    },
-  })
 
 interface FormProps {
     name: FieldPath<FormValues>
@@ -52,6 +37,7 @@ export function FormFieldCompo({
     type,
     inputOrTextArea
 } :FormProps) {
+
   return (
     <FormField
           control={control}
@@ -61,13 +47,13 @@ export function FormFieldCompo({
               <FormLabel className="text-purple-300">{label}</FormLabel>
               <FormControl>
                 {inputOrTextArea === "input" ? 
-                <Input type={type} placeholder={placeholder} {...field} className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"/>
-                :<Textarea placeholder={placeholder} {...field} className="bg-gray-700 border-gray-600 text-white placeholder:text-gray-400"/>
+                <Input type={type} placeholder={placeholder} {...field} className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"/>
+                :<Textarea placeholder={placeholder} {...field} className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-400"/>
           }
               </FormControl>
-              <FormDescription>
+              {description && <FormDescription>
                 {description}
-              </FormDescription>
+              </FormDescription>}
               <FormMessage />
             </FormItem>
           )}
