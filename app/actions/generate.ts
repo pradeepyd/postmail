@@ -6,81 +6,104 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
 export async function generateEmail({
   name,
-  role,
-  website,
-  url,
-  recipientContext,
-  calcom,
-  linkedin,
+  email,
+  position,
   aboutYourself,
   recipient,
-  company,
+  recipientEmail,
+  aboutRecipient,
   reason,
+  additionalLinks,
+  calcom,
+  attachedFile,
+
 }: {
   name: string;
-  website:string;
-  role: string;
-  linkedin:string;
-  aboutYourself:string;
-  recipient: string;
-  company: string;
+  email: string;
+  position: string;
+  aboutYourself: string;
+  recipient?: string;
+  recipientEmail: string;
+  aboutRecipient: string;
   reason: string;
-  calcom:string;
-  recipientContext:string;
-  url?:string;
+  additionalLinks?: string;
+  calcom?: string;
+  attachedFile: File,
 }) {
+
+
 const prompt = `
-      You are "Grove," a world-class cold email strategist. Your task is to write a highly professional, concise, and personalized cold email that feels human and compels a response.
+You are "Grove," a world-class cold email strategist. Your task is to write a highly professional, concise, and personalized cold email that feels human and compels a response.
 
-      **Output format MUST be a single, raw JSON object with two keys: "subject" and "body". Do NOT add any markdown like \`\`\`json, introductory text, or explanations.**
+**Return ONLY a valid raw JSON object with two fields: "subject" and "body". No explanations, no formatting, no markdown.**
 
-      ---
-      **SENDER'S PROFILE:**
-      - Name: ${name}
-      - Title: ${role}
-      - Company: ${company || 'Not provided (acting as an individual)'}
-      - Website: ${website || 'Not provided'}
-      - Unique Value Proposition (What they do): ${role}
-      - About the sender: ${aboutYourself || 'Not provided'}
-      - Scheduling Link (cal.com/calendly): ${calcom || 'Not provided'}
-      - LinkedIn: ${linkedin || 'Not provided'}
-      ---
-      **RECIPIENT INFORMATION:**
-      - Name: ${recipient || 'Not provided'}
-      - The Goal of this Email: "${reason}"
-      - Personalization Context (The key for the opening line): ${recipientContext || "No specific context provided. Infer the recipient's role and potential pain points from the 'Email Goal' to craft a relevant, but slightly more general, opening line."}
-      ---
-      **CRITICAL INSTRUCTIONS:**
+---
 
-      1.  **Subject Line ("subject"):**
-          *   Create a short, intriguing, and professional subject (4-7 words).
-          *   Avoid generic subjects like "Quick Question". Make it relevant to the personalization context if possible.
-          *   Use lowercase, except for proper nouns. It feels more personal. Example: "your post on scaling engineering teams"
+📌 **IMPORTANT OUTPUT INSTRUCTION — READ CAREFULLY:**
+Return a valid, raw JSON object ONLY, like:
+{"subject": "frontend role", "body": "Hi John,\\n\\nI saw your post about...\\n\\nWould you be open to..."}
+⚠️ DO NOT include \`\`\`json, any markdown code blocks, extra text, or explanations. Only output the JSON object. Nothing else.
 
-      2.  **Email Body ("body"):**
-          *   **Greeting:** Start the 'body' with a greeting. 
-              - If a 'recipientName' is provided, use it. Example: "Hi ${recipient},"
-              - If no name is provided, use a professional, neutral greeting like "Hi there,".
-          *   **Formatting:** Use newline characters (\\n\\n) to create short, easy-to-read paragraphs. The entire body should be a single string in the JSON output.
-          *   **Opening Line (1-2 sentences):** This is the MOST important part. Use the "Personalization Context" to write a genuine, specific opening line that shows you've done your research. It should NOT be about you (the sender).
-          *   **Bridge & Value Prop (2-3 sentences):** Smoothly transition from your opening line to the sender's value proposition. Connect their achievement/interest to a problem you solve. Frame it as "I saw you did X, which is why I thought you might be interested in Y."
-          *   **Call to Action (CTA - 1 sentence):** Create a clear, low-friction CTA.
-              - If a scheduling link is available and the goal is a meeting, incorporate it naturally. Example: "Open to exploring this further? You can find a time on my calendar that works for you: ${calcom}"
-              - If no link is available, ask a simple, interest-gauging question. Example: "Is improving developer onboarding a priority for you in Q3?"
-          *   **Closing:** The 'body' MUST end before the signature. Do NOT include "Best regards,", the sender's name, or any contact info. This will be added by the application.
-      ---
-      
-      Generate the JSON output now.
-    `;
+---
 
-  const output = await askGemini(prompt);
+✉️ **SENDER'S PROFILE:**
+- Name: ${name}
+- Email: ${email}
+- Title: ${position}
+- Company: Not provided (individual)
+- About: ${aboutYourself || 'Not provided'}
+- Scheduling link: ${calcom || 'Not provided'}
+- Additional Links (LinkedIn, portfolio, etc): ${additionalLinks || 'Not provided'}
+- Attached File: ${attachedFile ? `Yes – ${attachedFile.name}` : "None"}
+- Reason for the Email: "${reason}"
+---
 
-  try {
-    return JSON.parse(output); // Ensure Gemini returns valid JSON
-  } catch (err) {
+👤 **RECIPIENT DETAILS:**
+- Name: ${recipient || 'Not provided'}
+- Email: ${recipientEmail}
+- About Recipient (for personalization): ${aboutRecipient || "No specific context provided. You may infer from role and goal."}
+
+---
+  **Instruction for email subject:**
+1. **"subject":**
+   - Short, clear, and relevant (max 8 words).
+   - No generic phrases like “Quick question”.
+   - Personal if possible (e.g. “frontend help”).
+
+📎 **Instructions for the email:**
+1. Include a short and effective subject line.
+2. Start with a greeting. Use recipient's name if given.
+3. Use 1–2 personalized opening lines or introduction based on the sender's position or background.
+4. Smoothly transition to the sender’s value prop and how it might help.and what is the purpose of email
+5. Add a polite call-to-action. If scheduling link is available, include it.
+6. If an attached file exists, mention it like: "I've attached my resume for your reference."
+7. include closing lines like "Best regards", name, or links.
+
+---
+**Important Rules:**
+- Never include filler like "[mention something specific]". If no info is available, generalize professionally.
+- Output ONLY valid JSON: {"subject": "...", "body": "..."}
+- Don't use backticks, markdown, or code blocks.
+- Be polite the starting should be sender introduction
+- at last include about attachedfile if it is present
+- If a resume is attached, include a brief, polite sentence that points it out. Example: "I’ve attached my resume   below for your reference."
+
+🎯 Your job is to generate the perfect cold email. Keep it crisp, human, and compelling.
+Generate the JSON now.
+`;
+  
+    try {
+    const output = await askGemini(prompt);
+    const cleanedOutput = output
+    .replace(/^```json/, "")
+    .replace(/^```/, "")
+    .replace(/```$/, "")
+    .trim();
+    return JSON.parse(cleanedOutput); // Ensure Gemini returns valid JSON
+  } catch (err:any) {
     return {
       subject: "Error parsing Gemini output",
-      email: `<p>Raw response from Gemini:<br/>${output}</p>`,
+      body: `Error occurred while generating email. Please try again later.\n\nDetails:\n${err.message || err}`,
     };
   }
 }
@@ -88,7 +111,7 @@ const prompt = `
 
 
 export async function askGemini(prompt: string) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" }); 
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
   const result = await model.generateContent(prompt);
   const response = await result.response.text();
 
