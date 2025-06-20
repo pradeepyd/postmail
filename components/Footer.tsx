@@ -21,7 +21,7 @@ const Footer = () => {
           className="mb-4"
         >
           <p className="text-white text-md font-medium flex items-center justify-center gap-1">
-            Made with <Heart className="h-5 w-5 text-red-500 fill-current" /> by Pradeep
+            Build with <Heart className="h-5 w-5 text-red-500 fill-current" /> by Pradeep
           </p>
         </MotionDiv>
         
