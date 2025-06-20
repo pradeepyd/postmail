@@ -4,10 +4,10 @@ import {MotionDiv} from "./motionDiv";
 
 const Footer = () => {
   const socialLinks = [
-    { icon: <Github className="h-5 w-5" />, href: "#", label: "GitHub" },
-    { icon: <Twitter className="h-5 w-5" />, href: "#", label: "Twitter" },
-    { icon: <Linkedin className="h-5 w-5" />, href: "#", label: "LinkedIn" },
-    { icon: <Instagram className="h-5 w-5" />, href: "#", label: "Instagram" },
+    { icon: <Github className="h-5 w-5" />, href: "https://github.com/pradeepyd", label: "GitHub" },
+    { icon: <Twitter className="h-5 w-5" />, href: "https://x.com/pradeep100xdev", label: "Twitter" },
+    { icon: <Linkedin className="h-5 w-5" />, href: "https://www.linkedin.com/in/pradeep-yadav-7b205b280", label: "LinkedIn" },
+    { icon: <Instagram className="h-5 w-5" />, href: "https://www.instagram.com/im_pradeep_ydv", label: "Instagram" },
   ];
 
   return (

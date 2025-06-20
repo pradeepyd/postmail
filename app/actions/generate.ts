@@ -28,7 +28,7 @@ export async function generateEmail({
   reason: string;
   additionalLinks?: string;
   calcom?: string;
-  attachedFile: File,
+  attachedFile?: File | null 
 }) {
 
 
@@ -67,15 +67,18 @@ Return a valid, raw JSON object ONLY, like:
   **Instruction for email subject:**
 1. **"subject":**
    - Short, clear, and relevant (max 8 words).
+   - Clear and relevant to the job (e.g., "Frontend Developer Role at xyz.com")
    - No generic phrases like “Quick question”.
    - Personal if possible (e.g. “frontend help”).
 
 📎 **Instructions for the email:**
-1. Include a short and effective subject line.
-2. Start with a greeting. Use recipient's name if given.
-3. Use 1–2 personalized opening lines or introduction based on the sender's position or background.
-4. Smoothly transition to the sender’s value prop and how it might help.and what is the purpose of email
-5. Add a polite call-to-action. If scheduling link is available, include it.
+2. **Greeting:** Use recipient’s name if available.
+
+3. **Introduction:** 1–2 lines introducing the sender, experience, and background.
+
+4. **Value:** 1–2 lines on how the sender can add value to the company/team.
+
+5. **Call to Action:** Ask politely if they are open to a quick chat or further discussion if scheduling link or    calcom link is available 
 6. If an attached file exists, mention it like: "I've attached my resume for your reference."
 7. include closing lines like "Best regards", name, or links.
 
@@ -86,7 +89,10 @@ Return a valid, raw JSON object ONLY, like:
 - Don't use backticks, markdown, or code blocks.
 - Be polite the starting should be sender introduction
 - at last include about attachedfile if it is present
+- Be friendly, professional, and confident
+- Include newline characters (\\n) where needed
 - If a resume is attached, include a brief, polite sentence that points it out. Example: "I’ve attached my resume   below for your reference."
+- Never include filler or placeholders like “[mention something]”. Always replace or remove them. If context is missing, rephrase or generalize it professionally.
 
 🎯 Your job is to generate the perfect cold email. Keep it crisp, human, and compelling.
 Generate the JSON now.
@@ -100,10 +106,10 @@ Generate the JSON now.
     .replace(/```$/, "")
     .trim();
     return JSON.parse(cleanedOutput); // Ensure Gemini returns valid JSON
-  } catch (err:any) {
+  } catch (err:unknown) {
     return {
       subject: "Error parsing Gemini output",
-      body: `Error occurred while generating email. Please try again later.\n\nDetails:\n${err.message || err}`,
+      body: `Error occurred while generating email. Please try again later.\n\nDetails:\n${err}}`,
     };
   }
 }

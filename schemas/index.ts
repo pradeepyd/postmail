@@ -1,5 +1,10 @@
 import * as z from "zod";
 
+const fileSchema = z.object({
+  filename: z.string(),
+  content: z.any(), // Zod doesn't work well with instanceof(File) or FileList
+});
+
 export const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email("Valid email is required"),
@@ -10,5 +15,5 @@ export const formSchema = z.object({
   recipientEmail: z.string().email("Valid recipient email is required"),
   aboutRecipient: z.string().optional(),
   additionalLinks: z.string().optional(),
-  calcom:z.string().optional()
+  calcom:z.string().optional(),
 });

@@ -1,10 +1,8 @@
 
 import FAQSection from "@/components/FAQsection";
 import Footer from "@/components/Footer";
-import { FormCompo } from "@/components/FormCompo";
 import HeroSection from "@/components/HeroSection";
 import  TwinklingStars  from "@/components/TwinklingStars";
-import { div } from "motion/react-client";
 
 
 export default function HomePage() {

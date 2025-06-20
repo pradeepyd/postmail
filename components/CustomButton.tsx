@@ -12,8 +12,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   type = "button",
   className = "",
   disabled = false,
-  size="lg",
   children,
+  size="lg",
   ...rest
 }) => {
   return (
@@ -21,6 +21,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       type={type}
       disabled={disabled}
       className={className}
+      size="lg"
       {...rest} 
     >
       {children}
