@@ -4,11 +4,9 @@ import FeaturesSection from "./FeatureSection";
 import { MotionH1,MotionP } from "./motionDiv";
 import { CTAbutton } from "./CTAbutton";
 const HeroSection = () => {
-  // const [showPreview, setShowPreview] = useState(false);
 
   return (
     <>
-      {/* Badge */}
       <div className="mx-auto mt-10 flex max-w-fit items-center justify-center space-x-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 px-4 py-1 backdrop-blur-sm shadow-lg">
         <Sparkles className="h-4 w-4 text-purple-300" />
         <span className="text-sm font-medium text-purple-100">
@@ -16,7 +14,6 @@ const HeroSection = () => {
         </span>
       </div>
 
-      {/* Hero section */}
       <div className="container mx-auto mt-10 px-6 text-center">
         <MotionH1 
           initial={{ opacity: 0, y: 20 }}
@@ -41,15 +38,8 @@ const HeroSection = () => {
         </MotionP>
 
         <FeaturesSection/>
-
-        {/* CTA Buttons */}
         <CTAbutton/>
       </div>
-
-      {/* <EmailPreviewModal 
-        showPreview={showPreview} 
-        onClose={() => setShowPreview(false)} 
-      /> */}
     </>
   );
 };
