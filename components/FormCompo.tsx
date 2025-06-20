@@ -10,12 +10,13 @@ import CustomButton from "./CustomButton"
 import { Sparkles } from "lucide-react"
 import { useState } from "react"
 
-type FormValues = z.infer<typeof formSchema>;
+export type FormValues = z.infer<typeof formSchema>;
 
 
 
-export const FormCompo = ({onGenerate}:{onGenerate: (values: FormValues) => void;}) => {
-  const [isGenerating, setIsGenerating] = useState(false)
+export const FormCompo = ({onGenerate}:{onGenerate: (data:{ formValues: FormValues; file?: File }) => void}) => {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,13 +29,26 @@ export const FormCompo = ({onGenerate}:{onGenerate: (values: FormValues) => void
       recipientEmail: "",
       aboutRecipient: "",
       additionalLinks: "",
-      calcom:""
+      calcom:"",
     },
   })
 
   async function onSubmit(values: FormValues) {
+     const formData = new FormData();
+
+  // Add all form fields
+  Object.entries(values).forEach(([key, value]) => {
+    if (typeof value === "string") {
+      formData.append(key, value);
+    }
+  });
+
+  // Only append file if it's selected
+  if (selectedFile) {
+    formData.append("file", selectedFile);
+  }
     setIsGenerating(true);
-    await onGenerate(values); // send data up
+    await onGenerate({ formValues: values, file: selectedFile ?? undefined }); // send data up
     setIsGenerating(false);
   }
 
@@ -129,7 +143,7 @@ export const FormCompo = ({onGenerate}:{onGenerate: (values: FormValues) => void
             placeholder="relevent links (LinkedIn, portfolio, websites, etc.)"
             description="Separate multiple links with commas"
           />
-          <FileUpload />
+          <FileUpload onChange={(files) => setSelectedFile(files[0])}/>
           <CustomButton type="submit" className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white"
             size="lg"
             disabled={isGenerating}>
