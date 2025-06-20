@@ -49,7 +49,9 @@ export const FormCompo = ({onGenerate}:{onGenerate: (data:{ formValues: FormValu
   }
     setIsGenerating(true);
     await onGenerate({ formValues: values, file: selectedFile ?? undefined }); // send data up
-    setIsGenerating(false);
+    setTimeout(() => {
+      setIsGenerating(false);
+    }, 10000);
   }
 
 

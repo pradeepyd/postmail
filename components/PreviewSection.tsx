@@ -41,8 +41,9 @@ const handleSend = async () => {
         }
       : undefined,
   });
-
-  setIsSending(false);
+    setTimeout(() => {
+        setIsSending(false);
+  }, 10000);
 };
     return (
         <div className="space-y-6">
