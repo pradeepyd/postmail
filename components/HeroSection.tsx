@@ -37,7 +37,7 @@ const HeroSection = () => {
           className="mx-auto mt-8 max-w-2xl text-lg text-gray-300 mb-16"
         >
           Create personalized, professional emails in seconds using Google Gemini AI. 
-          Preview your message and send it with confidence - all in one click.
+          Preview your message and send it with confidence - all in one click without signing in.
         </MotionP>
 
         <FeaturesSection/>
