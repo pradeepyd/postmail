@@ -5,33 +5,45 @@ import { useState } from "react"
 import CustomButton from "./CustomButton"
 import { sendEmail } from "@/app/actions/sendEmail"
 
-
-export const PreviewSection = ({generatedEmail,formData}:{ generatedEmail: { subject: string; body: string } | null;
-formData:{
+type PreviewSectionProps = {
+  generatedEmail: { subject: string; body: string } | null;
+  formData: {
     email: string;
     recipientEmail: string;
-  };}) => {
+    file?: File;
+  };
+};
+
+export const PreviewSection = ({generatedEmail,formData}:PreviewSectionProps) => {
     const [isSending, setIsSending] = useState(false);
 
-  const handleSend = async () => {
-    if (!generatedEmail) return;
-    setIsSending(true);
-    // send using Resend here
-     const res = await sendEmail({
-      from: formData.email, // Sender
-      to: formData.recipientEmail, // Recipient
-      subject: generatedEmail.subject,
-      html: generatedEmail.body,
-    });
+const handleSend = async () => {
+     if (!generatedEmail) return;
+  setIsSending(true);
 
-    if (res.success) {
-      alert("Email sent successfully!");
-    } else {
-      alert("Failed to send email: " + res.error);
-    }
-    setIsSending(false);
-  };
+  let attachmentBase64: string | null = null;
 
+  if (formData?.file) {
+    const buffer = await formData?.file.arrayBuffer();
+    attachmentBase64 = Buffer.from(buffer).toString("base64");
+  }
+
+    await sendEmail({
+    from: formData.email,
+    to: formData.recipientEmail,
+    subject: generatedEmail.subject,
+    html: generatedEmail.body,
+    attachment: attachmentBase64
+      ? {
+          content: attachmentBase64,
+          filename: formData.file!.name,
+          contentType: formData.file!.type,
+        }
+      : undefined,
+  });
+
+  setIsSending(false);
+};
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between mb-6">
