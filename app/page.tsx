@@ -9,9 +9,9 @@ export default function HomePage() {
       {/* Full screen background */}
       <div className="fixed inset-0 bg-black">
         <div className="absolute -right-40 -top-10 w-full h-full">
-          <div className="h-[30rem] rounded-full w-[60rem] bg-gradient-to-b blur-[6rem] from-purple-600/30 to-sky-600/30"></div>
-          <div className="h-[30rem] rounded-full w-[90rem] bg-gradient-to-b blur-[6rem] from-pink-900/30 to-yellow-400/30 -mt-10"></div>
-          <div className="h-[30rem] rounded-full w-[60rem] bg-gradient-to-b blur-[6rem] from-yellow-600/30 to-sky-500/30 -mt-10"></div>
+          <div className="h-[10rem] rounded-full w-[60rem] bg-gradient-to-b blur-[6rem] from-purple-600/30 to-sky-600/30"></div>
+          <div className="h-[10rem] rounded-full w-[90rem] bg-gradient-to-b blur-[6rem] from-pink-900/30 to-yellow-400/30 -mt-10"></div>
+          <div className="h-[10rem] rounded-full w-[60rem] bg-gradient-to-b blur-[6rem] from-yellow-600/30 to-sky-500/30 -mt-10"></div>
         </div>
       </div>
 
